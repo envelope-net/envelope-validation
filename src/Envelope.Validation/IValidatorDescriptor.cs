@@ -36,8 +36,12 @@ public interface IValidatorDescriptor
 	//ExclusiveBetween, InclusiveBetween
 	IComparable? From { get; }
 
+	bool InclusiveFrom { get; }
+
 	//ExclusiveBetween, InclusiveBetween
 	IComparable? To { get; }
+
+	bool InclusiveTo { get; }
 
 	//Length
 	int MinLength { get; }
