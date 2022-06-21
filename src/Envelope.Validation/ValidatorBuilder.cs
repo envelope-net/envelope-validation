@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 namespace Envelope.Validation;
 
 //#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
-public interface IValidatorBuilder<TBuilder, T>
+public interface IValidatorBuilder<TBuilder, T> : IValidatorDescriptorBuilder
 	where TBuilder : IValidatorBuilder<TBuilder, T>
 {
 	TBuilder Object(Validator<T> validator);
@@ -53,11 +53,13 @@ public interface IValidatorBuilder<TBuilder, T>
 		Func<T?, string>? failureInfoFunc = null);
 }
 
-public abstract class ValidatorBuilderBase<TBuilder, T> : IValidatorBuilder<TBuilder, T>
+public abstract class ValidatorBuilderBase<TBuilder, T> : IValidatorBuilder<TBuilder, T>, IValidatorDescriptorBuilder
 	where TBuilder : ValidatorBuilderBase<TBuilder, T>
 {
 	protected readonly TBuilder _builder;
 	protected Validator<T> _validator;
+
+	public Type ObjectType { get; } = typeof(T);
 
 	protected ValidatorBuilderBase(Validator<T> validator)
 	{
@@ -202,6 +204,12 @@ public abstract class ValidatorBuilderBase<TBuilder, T> : IValidatorBuilder<TBui
 
 		return _builder;
 	}
+
+	public virtual IValidatorDescriptor ToDescriptor(IServiceProvider serviceProvider)
+		=> Build().ToDescriptor();
+
+	public virtual IValidatorDescriptor ToDescriptor(IServiceProvider serviceProvider, object? state = null)
+		=> Build().ToDescriptor();
 }
 
 public class ValidatorBuilder<T> : ValidatorBuilderBase<ValidatorBuilder<T>, T>
