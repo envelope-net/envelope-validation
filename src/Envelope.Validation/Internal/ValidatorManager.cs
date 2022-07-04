@@ -49,14 +49,14 @@ internal class ValidatorManager : IValidatorManager
 
 	public IValidatorDescriptor? GetValidatorDescriptorFor(Type objectType, Type commandType, IServiceProvider serviceProvider, object? state = null)
 	{
-		var ValidatorDescriptorBuilder = GetValidatorDescriptorBuilderFor(objectType, commandType);
-		if (ValidatorDescriptorBuilder == null)
+		var validatorDescriptorBuilder = GetValidatorDescriptorBuilderFor(objectType, commandType);
+		if (validatorDescriptorBuilder == null)
 			throw new InvalidOperationException($"No {nameof(IValidatorDescriptorBuilder)} found for <{objectType?.FullName ?? "NULL"}, {commandType?.FullName ?? "NULL"}>");
 
 		IValidatorDescriptor? descriptor = null;
 		try
 		{
-			descriptor = ValidatorDescriptorBuilder.ToDescriptor(serviceProvider);
+			descriptor = validatorDescriptorBuilder.ToDescriptor(serviceProvider);
 		}
 		catch (Exception ex)
 		{
@@ -64,7 +64,7 @@ internal class ValidatorManager : IValidatorManager
 		}
 
 		if (descriptor == null)
-			throw new InvalidOperationException($"{nameof(ValidatorDescriptorBuilder.ToDescriptor)} for <{objectType?.FullName ?? "NULL"}, {commandType?.FullName ?? "NULL"}> returns null.");
+			throw new InvalidOperationException($"{nameof(validatorDescriptorBuilder.ToDescriptor)} for <{objectType?.FullName ?? "NULL"}, {commandType?.FullName ?? "NULL"}> returns null.");
 
 		return descriptor;
 	}
