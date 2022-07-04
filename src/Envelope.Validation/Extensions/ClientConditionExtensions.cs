@@ -3,7 +3,7 @@ using Envelope.Validation.Internal;
 using Envelope.Extensions;
 using System.Linq.Expressions;
 
-namespace Envelope.Validation.Extensions;
+namespace Envelope.Validation;
 
 public static class ClientConditionExtensions
 {
