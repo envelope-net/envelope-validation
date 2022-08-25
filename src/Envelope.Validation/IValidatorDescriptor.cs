@@ -69,5 +69,5 @@ public interface IValidatorDescriptor
 
 	string Print();
 
-	internal void PrintInternal(StringBuilder sb, int indent);
+	void PrintInternal(StringBuilder sb, int indent);
 }

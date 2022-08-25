@@ -22,7 +22,7 @@ public abstract class ValidatorBase : IValidator
 
 	internal abstract ValidationResult? Validate(ValidationContext context, ValidationOptions? options);
 
-	void IValidator.AddValidator(ValidatorBase validator)
+	void IValidator.AddValidatorInternal(ValidatorBase validator)
 	{
 		if (validator == null)
 			throw new ArgumentNullException(nameof(validator));
