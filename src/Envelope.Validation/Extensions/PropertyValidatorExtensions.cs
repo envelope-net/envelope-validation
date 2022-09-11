@@ -16,7 +16,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, string?, string, string?>? messageGetter = null,
 		Func<T?, string?, string, string?>? messageWithPropertyGetter = null)
 	{
-		((IValidator)propertyValidator).AddValidator(new EmailValidator<T>(
+		((IValidator)propertyValidator).AddValidatorInternal(new EmailValidator<T>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -33,7 +33,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, TProperty?, string, string?>? messageWithPropertyGetter = null)
 	{
 		var defaultValue = typeof(TProperty).GetDefaultNullableValue();
-		((IValidator)propertyValidator).AddValidator(new DefaultOrEmptyValidator<T, TProperty>(
+		((IValidator)propertyValidator).AddValidatorInternal(new DefaultOrEmptyValidator<T, TProperty>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -51,7 +51,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, TProperty?, string, string?>? messageWithPropertyGetter = null)
 	{
 		var defaultValue = typeof(TProperty).GetDefaultNullableValue();
-		((IValidator)propertyValidator).AddValidator(new NotDefaultOrEmptyValidator<T, TProperty>(
+		((IValidator)propertyValidator).AddValidatorInternal(new NotDefaultOrEmptyValidator<T, TProperty>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -71,7 +71,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, TProperty?, string, string?>? messageWithPropertyGetter = null)
 		where TProperty : struct, IComparable<TProperty>, IComparable
 	{
-		((IValidator)propertyValidator).AddValidator(new EqualValidator<T, TProperty?>(
+		((IValidator)propertyValidator).AddValidatorInternal(new EqualValidator<T, TProperty?>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -92,7 +92,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, TProperty?, string, string?>? messageWithPropertyGetter = null)
 		where TProperty : IComparable<TProperty>, IComparable
 	{
-		((IValidator)propertyValidator).AddValidator(new EqualValidator<T, TProperty>(
+		((IValidator)propertyValidator).AddValidatorInternal(new EqualValidator<T, TProperty>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -113,7 +113,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, TProperty?, string, string?>? messageWithPropertyGetter = null)
 		where TProperty : struct, IComparable<TProperty>, IComparable
 	{
-		((IValidator)propertyValidator).AddValidator(new NotEqualValidator<T, TProperty?>(
+		((IValidator)propertyValidator).AddValidatorInternal(new NotEqualValidator<T, TProperty?>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -134,7 +134,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, TProperty?, string, string?>? messageWithPropertyGetter = null)
 		where TProperty : IComparable<TProperty>, IComparable
 	{
-		((IValidator)propertyValidator).AddValidator(new NotEqualValidator<T, TProperty>(
+		((IValidator)propertyValidator).AddValidatorInternal(new NotEqualValidator<T, TProperty>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -156,7 +156,7 @@ public static class PropertyValidatorExtensions
 		where TProperty : struct, IComparable<TProperty>, IComparable
 	{
 		if (values == null || values.Count() < 2)
-			((IValidator)propertyValidator).AddValidator(new EqualValidator<T, TProperty?>(
+			((IValidator)propertyValidator).AddValidatorInternal(new EqualValidator<T, TProperty?>(
 				propertyValidator.ValueGetter,
 				propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 				propertyValidator.Condition,
@@ -167,7 +167,7 @@ public static class PropertyValidatorExtensions
 				messageGetter,
 				messageWithPropertyGetter));
 		else
-			((IValidator)propertyValidator).AddValidator(new MultiEqualValidator<T, TProperty?>(
+			((IValidator)propertyValidator).AddValidatorInternal(new MultiEqualValidator<T, TProperty?>(
 				propertyValidator.ValueGetter,
 				propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 				propertyValidator.Condition,
@@ -190,7 +190,7 @@ public static class PropertyValidatorExtensions
 		where TProperty : IComparable<TProperty>, IComparable
 	{
 		if (values == null || values.Count() < 2)
-			((IValidator)propertyValidator).AddValidator(new EqualValidator<T, TProperty>(
+			((IValidator)propertyValidator).AddValidatorInternal(new EqualValidator<T, TProperty>(
 				propertyValidator.ValueGetter,
 				propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 				propertyValidator.Condition,
@@ -203,7 +203,7 @@ public static class PropertyValidatorExtensions
 				messageGetter,
 				messageWithPropertyGetter));
 		else
-			((IValidator)propertyValidator).AddValidator(new MultiEqualValidator<T, TProperty>(
+			((IValidator)propertyValidator).AddValidatorInternal(new MultiEqualValidator<T, TProperty>(
 				propertyValidator.ValueGetter,
 				propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 				propertyValidator.Condition,
@@ -226,7 +226,7 @@ public static class PropertyValidatorExtensions
 		where TProperty : struct, IComparable<TProperty>, IComparable
 	{
 		if (values == null || values.Count() < 2)
-			((IValidator)propertyValidator).AddValidator(new NotEqualValidator<T, TProperty?>(
+			((IValidator)propertyValidator).AddValidatorInternal(new NotEqualValidator<T, TProperty?>(
 				propertyValidator.ValueGetter,
 				propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 				propertyValidator.Condition,
@@ -237,7 +237,7 @@ public static class PropertyValidatorExtensions
 				messageGetter,
 				messageWithPropertyGetter));
 		else
-			((IValidator)propertyValidator).AddValidator(new MultiNotEqualValidator<T, TProperty?>(
+			((IValidator)propertyValidator).AddValidatorInternal(new MultiNotEqualValidator<T, TProperty?>(
 				propertyValidator.ValueGetter,
 				propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 				propertyValidator.Condition,
@@ -260,7 +260,7 @@ public static class PropertyValidatorExtensions
 		where TProperty : IComparable<TProperty>, IComparable
 	{
 		if (values == null || values.Count() < 2)
-			((IValidator)propertyValidator).AddValidator(new NotEqualValidator<T, TProperty>(
+			((IValidator)propertyValidator).AddValidatorInternal(new NotEqualValidator<T, TProperty>(
 				propertyValidator.ValueGetter,
 				propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 				propertyValidator.Condition,
@@ -273,7 +273,7 @@ public static class PropertyValidatorExtensions
 				messageGetter,
 				messageWithPropertyGetter));
 		else
-			((IValidator)propertyValidator).AddValidator(new MultiNotEqualValidator<T, TProperty>(
+			((IValidator)propertyValidator).AddValidatorInternal(new MultiNotEqualValidator<T, TProperty>(
 				propertyValidator.ValueGetter,
 				propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 				propertyValidator.Condition,
@@ -295,7 +295,7 @@ public static class PropertyValidatorExtensions
 		where TProperty : struct, IComparable<TProperty>, IComparable
 	{
 		var defaultValue = typeof(TProperty).GetDefaultNullableValue();
-		((IValidator)propertyValidator).AddValidator(new RangeValidator<T, TProperty?>(
+		((IValidator)propertyValidator).AddValidatorInternal(new RangeValidator<T, TProperty?>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -319,7 +319,7 @@ public static class PropertyValidatorExtensions
 		where TProperty : IComparable<TProperty>, IComparable
 	{
 		var defaultValue = typeof(TProperty).GetDefaultNullableValue();
-		((IValidator)propertyValidator).AddValidator(new RangeValidator<T, TProperty>(
+		((IValidator)propertyValidator).AddValidatorInternal(new RangeValidator<T, TProperty>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -343,7 +343,7 @@ public static class PropertyValidatorExtensions
 		where TProperty : struct, IComparable<TProperty>, IComparable
 	{
 		var defaultValue = typeof(TProperty).GetDefaultNullableValue();
-		((IValidator)propertyValidator).AddValidator(new RangeValidator<T, TProperty?>(
+		((IValidator)propertyValidator).AddValidatorInternal(new RangeValidator<T, TProperty?>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -367,7 +367,7 @@ public static class PropertyValidatorExtensions
 		where TProperty : IComparable<TProperty>, IComparable
 	{
 		var defaultValue = typeof(TProperty).GetDefaultNullableValue();
-		((IValidator)propertyValidator).AddValidator(new RangeValidator<T, TProperty>(
+		((IValidator)propertyValidator).AddValidatorInternal(new RangeValidator<T, TProperty>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -391,7 +391,7 @@ public static class PropertyValidatorExtensions
 		where TProperty : struct, IComparable<TProperty>, IComparable
 	{
 		var defaultValue = typeof(TProperty).GetDefaultNullableValue();
-		((IValidator)propertyValidator).AddValidator(new RangeValidator<T, TProperty?>(
+		((IValidator)propertyValidator).AddValidatorInternal(new RangeValidator<T, TProperty?>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -415,7 +415,7 @@ public static class PropertyValidatorExtensions
 		where TProperty : IComparable<TProperty>, IComparable
 	{
 		var defaultValue = typeof(TProperty).GetDefaultNullableValue();
-		((IValidator)propertyValidator).AddValidator(new RangeValidator<T, TProperty>(
+		((IValidator)propertyValidator).AddValidatorInternal(new RangeValidator<T, TProperty>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -439,7 +439,7 @@ public static class PropertyValidatorExtensions
 		where TProperty : struct, IComparable<TProperty>, IComparable
 	{
 		var defaultValue = typeof(TProperty).GetDefaultNullableValue();
-		((IValidator)propertyValidator).AddValidator(new RangeValidator<T, TProperty?>(
+		((IValidator)propertyValidator).AddValidatorInternal(new RangeValidator<T, TProperty?>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -463,7 +463,7 @@ public static class PropertyValidatorExtensions
 		where TProperty : IComparable<TProperty>, IComparable
 	{
 		var defaultValue = typeof(TProperty).GetDefaultNullableValue();
-		((IValidator)propertyValidator).AddValidator(new RangeValidator<T, TProperty>(
+		((IValidator)propertyValidator).AddValidatorInternal(new RangeValidator<T, TProperty>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -490,7 +490,7 @@ public static class PropertyValidatorExtensions
 		where TProperty : struct, IComparable<TProperty>, IComparable
 	{
 		var defaultValue = typeof(TProperty).GetDefaultNullableValue();
-		((IValidator)propertyValidator).AddValidator(new RangeValidator<T, TProperty?>(
+		((IValidator)propertyValidator).AddValidatorInternal(new RangeValidator<T, TProperty?>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -517,7 +517,7 @@ public static class PropertyValidatorExtensions
 		where TProperty : IComparable<TProperty>, IComparable
 	{
 		var defaultValue = typeof(TProperty).GetDefaultNullableValue();
-		((IValidator)propertyValidator).AddValidator(new RangeValidator<T, TProperty>(
+		((IValidator)propertyValidator).AddValidatorInternal(new RangeValidator<T, TProperty>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -538,7 +538,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, TProperty?, string, string?>? messageGetter = null,
 		Func<T?, TProperty?, string, string?>? messageWithPropertyGetter = null)
 	{
-		((IValidator)propertyValidator).AddValidator(new NullValidator<T, TProperty>(
+		((IValidator)propertyValidator).AddValidatorInternal(new NullValidator<T, TProperty>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -554,7 +554,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, TProperty?, string, string?>? messageGetter = null,
 		Func<T?, TProperty?, string, string?>? messageWithPropertyGetter = null)
 	{
-		((IValidator)propertyValidator).AddValidator(new NotNullValidator<T, TProperty>(
+		((IValidator)propertyValidator).AddValidatorInternal(new NotNullValidator<T, TProperty>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -571,7 +571,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, string?, string, string?>? messageGetter = null,
 		Func<T?, string?, string, string?>? messageWithPropertyGetter = null)
 	{
-		((IValidator)propertyValidator).AddValidator(new RegExValidator<T>(
+		((IValidator)propertyValidator).AddValidatorInternal(new RegExValidator<T>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -589,7 +589,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, string?, string, string?>? messageGetter = null,
 		Func<T?, string?, string, string?>? messageWithPropertyGetter = null)
 	{
-		((IValidator)propertyValidator).AddValidator(new LengthValidator<T>(
+		((IValidator)propertyValidator).AddValidatorInternal(new LengthValidator<T>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -608,7 +608,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, string?, string, string?>? messageGetter = null,
 		Func<T?, string?, string, string?>? messageWithPropertyGetter = null)
 	{
-		((IValidator)propertyValidator).AddValidator(new LengthValidator<T>(
+		((IValidator)propertyValidator).AddValidatorInternal(new LengthValidator<T>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -628,7 +628,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, string?, string, string?>? messageGetter = null,
 		Func<T?, string?, string, string?>? messageWithPropertyGetter = null)
 	{
-		((IValidator)propertyValidator).AddValidator(new LengthValidator<T>(
+		((IValidator)propertyValidator).AddValidatorInternal(new LengthValidator<T>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -649,7 +649,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, decimal, string, string?>? messageGetter = null,
 		Func<T?, decimal, string, string?>? messageWithPropertyGetter = null)
 	{
-		((IValidator)propertyValidator).AddValidator(new PrecisionScaleDecimalValidator<T, decimal>(
+		((IValidator)propertyValidator).AddValidatorInternal(new PrecisionScaleDecimalValidator<T, decimal>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -671,7 +671,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, decimal?, string, string?>? messageGetter = null,
 		Func<T?, decimal?, string, string?>? messageWithPropertyGetter = null)
 	{
-		((IValidator)propertyValidator).AddValidator(new PrecisionScaleDecimalValidator<T, decimal?>(
+		((IValidator)propertyValidator).AddValidatorInternal(new PrecisionScaleDecimalValidator<T, decimal?>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -693,7 +693,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, double, string, string?>? messageGetter = null,
 		Func<T?, double, string, string?>? messageWithPropertyGetter = null)
 	{
-		((IValidator)propertyValidator).AddValidator(new PrecisionScaleDoubleValidator<T, double>(
+		((IValidator)propertyValidator).AddValidatorInternal(new PrecisionScaleDoubleValidator<T, double>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -715,7 +715,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, double?, string, string?>? messageGetter = null,
 		Func<T?, double?, string, string?>? messageWithPropertyGetter = null)
 	{
-		((IValidator)propertyValidator).AddValidator(new PrecisionScaleDoubleValidator<T, double?>(
+		((IValidator)propertyValidator).AddValidatorInternal(new PrecisionScaleDoubleValidator<T, double?>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -737,7 +737,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, float, string, string?>? messageGetter = null,
 		Func<T?, float, string, string?>? messageWithPropertyGetter = null)
 	{
-		((IValidator)propertyValidator).AddValidator(new PrecisionScaleFloatValidator<T, float>(
+		((IValidator)propertyValidator).AddValidatorInternal(new PrecisionScaleFloatValidator<T, float>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -759,7 +759,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, float?, string, string?>? messageGetter = null,
 		Func<T?, float?, string, string?>? messageWithPropertyGetter = null)
 	{
-		((IValidator)propertyValidator).AddValidator(new PrecisionScaleFloatValidator<T, float?>(
+		((IValidator)propertyValidator).AddValidatorInternal(new PrecisionScaleFloatValidator<T, float?>(
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,

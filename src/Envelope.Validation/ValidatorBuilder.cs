@@ -96,7 +96,7 @@ public abstract class ValidatorBuilderBase<TBuilder, T> : IValidatorBuilder<TBui
 
 		var propertyValidator = new PropertyValidator<T, TProperty>(ValidatorType.PropertyValidator, PropertyAccessor.GetCachedAccessor(expression), newObjectPath, condition, clientConditionDefinition, failureInfoFunc, null, null);
 
-		((IValidator)_validator).AddValidator(propertyValidator);
+		((IValidator)_validator).AddValidatorInternal(propertyValidator);
 		propertyValidatorBuilder.Invoke(propertyValidator);
 
 		return _builder;
@@ -118,7 +118,7 @@ public abstract class ValidatorBuilderBase<TBuilder, T> : IValidatorBuilder<TBui
 
 		var navigationValidator = new NavigationValidator<T, TNavigation>(PropertyAccessor.GetCachedAccessor(expression), newObjectPath, condition, failureInfoFunc);
 
-		((IValidator)_validator).AddValidator(navigationValidator);
+		((IValidator)_validator).AddValidatorInternal(navigationValidator);
 		validatorBuilder.Invoke(navigationValidator!);
 		return _builder;
 	}
@@ -139,7 +139,7 @@ public abstract class ValidatorBuilderBase<TBuilder, T> : IValidatorBuilder<TBui
 
 		var enumerableValidator = new EnumerableValidator<T, TItem>(PropertyAccessor.GetCachedAccessor(expression), newObjectPath, condition, detailInfoFunc);
 
-		((IValidator)_validator).AddValidator(enumerableValidator);
+		((IValidator)_validator).AddValidatorInternal(enumerableValidator);
 		validatorBuilder.Invoke(enumerableValidator!);
 		return _builder;
 	}
@@ -155,7 +155,7 @@ public abstract class ValidatorBuilderBase<TBuilder, T> : IValidatorBuilder<TBui
 		var newObjectPath = _validator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp);
 
 		var validator = new ErrorValidator<T>(newObjectPath, condition, errorMessage, failureInfoFunc);
-		((IValidator)_validator).AddValidator(validator);
+		((IValidator)_validator).AddValidatorInternal(validator);
 
 		return _builder;
 	}
@@ -200,7 +200,7 @@ public abstract class ValidatorBuilderBase<TBuilder, T> : IValidatorBuilder<TBui
 				messageGetter,
 				messageWithPropertyGetter ?? messageGetter);
 
-		((IValidator)_validator).AddValidator(errorValidator);
+		((IValidator)_validator).AddValidatorInternal(errorValidator);
 
 		return _builder;
 	}

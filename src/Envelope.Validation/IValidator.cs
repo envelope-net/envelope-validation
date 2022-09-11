@@ -7,7 +7,7 @@ public interface IValidator
 	ValidatorType ValidatorType { get; }
 	IObjectPath ObjectPath { get; }
 	IValidatorDescriptor ToDescriptor();
-	internal void AddValidator(ValidatorBase validator);
+	void AddValidatorInternal(ValidatorBase validator);
 }
 
 public interface IValidator<T> : IValidator
