@@ -59,8 +59,8 @@ public static class ServiceCollectionExtensions
 			}
 		}
 
-		if (!found)
-			throw new ConfigurationException("No validator was found.");
+		//if (!found)
+		//	throw new ConfigurationException("No validator was found.");
 
 		services.TryAddSingleton<IValidatorManager>(validatorManager);
 
