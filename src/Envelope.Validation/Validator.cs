@@ -1,9 +1,8 @@
-﻿using Envelope.Validation.Client;
+﻿using Envelope.Extensions;
+using Envelope.Reflection.ObjectPaths;
+using Envelope.Validation.Client;
 using Envelope.Validation.Internal;
 using Envelope.Validation.Results;
-using Envelope.Extensions;
-using Envelope.Reflection.ObjectPaths;
-using Envelope.Validation;
 
 namespace Envelope.Validation;
 

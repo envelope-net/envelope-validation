@@ -199,7 +199,7 @@
     <value>Hodnota poľa musí byť väčšia ako {From} a menšia ako {To}. Vami zadaná hodnota {Value}.</value>
   </data>
   <data name="MultiExclusiveBetween_WithProperty" xml:space="preserve">
-    <value>Hodnota poľa '{PropertyName}' musí byť väčšia ako {From} a menšia ako {To}. Vami zadaná hodnota {Value}.</value>
+    <value>Hodnota poľa '{PropertyName}' musí byť väčšia ako {From} a menšia ako {To}. Vami zadaná hodnota je {Value}.</value>
   </data>
   <data name="MultiInclusiveBetween" xml:space="preserve">
     <value>Hodnota poľa musí byť medzi {From} a {To} (vrátane). Vami zadaná hodnota je {Value}.</value>
@@ -244,9 +244,9 @@
     <value>Pole '{PropertyName}' nemôže mať viac  ako {ExpectedPrecision} čísiel a {ExpectedScale} desatinných miest.</value>
   </data>
   <data name="RegEx" xml:space="preserve">
-    <value>Pole nemá správný formát.</value>
+    <value>Pole nemá správny formát.</value>
   </data>
   <data name="RegEx_WithProperty" xml:space="preserve">
-    <value>Pole '{PropertyName}' nemá správný formát.</value>
+    <value>Pole '{PropertyName}' nemá správny formát.</value>
   </data>
 </root>
