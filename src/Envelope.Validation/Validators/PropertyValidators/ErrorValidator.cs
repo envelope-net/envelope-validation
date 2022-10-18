@@ -16,7 +16,7 @@ internal class ErrorValidator<T, TProperty> : PropertyValidator<T, TProperty?>
 		Func<T?, string?>? failureInfoFunc,
 		Func<T?, TProperty?, string, string?>? messageGetter,
 		Func<T?, TProperty?, string, string?>? messageWithPropertyGetter)
-		: base(ValidatorType.Length, valueGetter, objectPath, condition, clientConditionDefinition, failureInfoFunc, messageGetter, messageWithPropertyGetter)
+		: base(ValidatorType.ErrorProperty, valueGetter, objectPath, condition, clientConditionDefinition, failureInfoFunc, messageGetter, messageWithPropertyGetter)
 	{
 		if (condition == null)
 			throw new ArgumentNullException(nameof(condition));
