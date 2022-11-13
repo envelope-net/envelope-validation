@@ -56,11 +56,12 @@ internal class EmailValidator<T> : PropertyValidator<T, string?>
 			return new ValidationResult(
 				new ValidationFailure(
 					ObjectPath,
+					context,
 					ValidatorType,
 					HasServerCondition,
 					ClientConditionDefinition,
-					GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.Email, options?.EmailMessageGetter),
-					GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.Email_WithProperty, options?.EmailMessageWithPropertyGetter),
+					GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.Email, options?.EmailMessageGetter),
+					GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.Email_WithProperty, options?.EmailMessageWithPropertyGetter),
 					FailureInfoFunc?.Invoke(ctx.InstanceToValidate)));
 	}
 
@@ -72,8 +73,8 @@ internal class EmailValidator<T> : PropertyValidator<T, string?>
 			GetType().ToFriendlyFullName(),
 			HasServerCondition,
 			ClientConditionDefinition,
-			GetValidationMessage(default, default, Resources.ValidationKeys.Email, null),
-			GetValidationMessageWithProperty(default, default, Resources.ValidationKeys.Email_WithProperty, null))
+			GetValidationMessage(default, default, Resources.Validation.__Keys.Email, null),
+			GetValidationMessageWithProperty(default, default, Resources.Validation.__Keys.Email_WithProperty, null))
 		{
 		};
 }

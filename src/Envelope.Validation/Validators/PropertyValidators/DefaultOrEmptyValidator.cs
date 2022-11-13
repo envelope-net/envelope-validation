@@ -50,11 +50,12 @@ internal class DefaultOrEmptyValidator<T, TProperty> : PropertyValidator<T, TPro
 			return new ValidationResult(
 				new ValidationFailure(
 					ObjectPath,
+					context,
 					ValidatorType,
 					HasServerCondition,
 					ClientConditionDefinition,
-					GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.DefaultOrEmpty, options?.DefaultOrEmptyMessageGetter),
-					GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.DefaultOrEmpty_WithProperty, options?.DefaultOrEmptyMessageWithPropertyGetter),
+					GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.DefaultOrEmpty, options?.DefaultOrEmptyMessageGetter),
+					GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.DefaultOrEmpty_WithProperty, options?.DefaultOrEmptyMessageWithPropertyGetter),
 					FailureInfoFunc?.Invoke(ctx.InstanceToValidate)));
 	}
 
@@ -66,8 +67,8 @@ internal class DefaultOrEmptyValidator<T, TProperty> : PropertyValidator<T, TPro
 			GetType().ToFriendlyFullName(),
 			HasServerCondition,
 			ClientConditionDefinition,
-			GetValidationMessage(default, default, Resources.ValidationKeys.DefaultOrEmpty, null),
-			GetValidationMessageWithProperty(default, default, Resources.ValidationKeys.DefaultOrEmpty_WithProperty, null))
+			GetValidationMessage(default, default, Resources.Validation.__Keys.DefaultOrEmpty, null),
+			GetValidationMessageWithProperty(default, default, Resources.Validation.__Keys.DefaultOrEmpty_WithProperty, null))
 		{
 			DefaultValue = _defaultValue
 		};

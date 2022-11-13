@@ -47,11 +47,12 @@ internal class NullValidator<T, TProperty> : PropertyValidator<T, TProperty?>
 				new ValidationResult(
 					new ValidationFailure(
 						ObjectPath,
+						context,
 						ValidatorType,
 						HasServerCondition,
 						ClientConditionDefinition,
-						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.Null, options?.NullMessageGetter),
-						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.Null_WithProperty, options?.NullMessageWithPropertyGetter),
+						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.Null, options?.NullMessageGetter),
+						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.Null_WithProperty, options?.NullMessageWithPropertyGetter),
 						FailureInfoFunc?.Invoke(ctx.InstanceToValidate)));
 	}
 
@@ -63,8 +64,8 @@ internal class NullValidator<T, TProperty> : PropertyValidator<T, TProperty?>
 			GetType().ToFriendlyFullName(),
 			HasServerCondition,
 			ClientConditionDefinition,
-			GetValidationMessage(default, default, Resources.ValidationKeys.Null, null),
-			GetValidationMessageWithProperty(default, default, Resources.ValidationKeys.Null_WithProperty, null))
+			GetValidationMessage(default, default, Resources.Validation.__Keys.Null, null),
+			GetValidationMessageWithProperty(default, default, Resources.Validation.__Keys.Null_WithProperty, null))
 		{
 		};
 }

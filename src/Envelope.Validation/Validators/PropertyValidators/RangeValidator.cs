@@ -75,15 +75,15 @@ internal class RangeValidator<T, TProperty> : PropertyValidator<T, TProperty?>
 			{
 				if (InclusiveTo)
 				{
-					_validationResourceKey = Resources.ValidationKeys.LessThanOrEqual;
-					_validationResourceKeyWithProperty = Resources.ValidationKeys.LessThanOrEqual_WithProperty;
+					_validationResourceKey = Resources.Validation.__Keys.LessThanOrEqual;
+					_validationResourceKeyWithProperty = Resources.Validation.__Keys.LessThanOrEqual_WithProperty;
 					DefaultValidationMessage = DEFAULT_LessThanOrEqual;
 					DefaultValidationMessageWithProperty = DEFAULT_LessThanOrEqual_WithProperty;
 				}
 				else
 				{
-					_validationResourceKey = Resources.ValidationKeys.LessThan;
-					_validationResourceKeyWithProperty = Resources.ValidationKeys.LessThan_WithProperty;
+					_validationResourceKey = Resources.Validation.__Keys.LessThan;
+					_validationResourceKeyWithProperty = Resources.Validation.__Keys.LessThan_WithProperty;
 					DefaultValidationMessage = DEFAULT_LessThan;
 					DefaultValidationMessageWithProperty = DEFAULT_LessThan_WithProperty;
 				}
@@ -95,15 +95,15 @@ internal class RangeValidator<T, TProperty> : PropertyValidator<T, TProperty?>
 			{
 				if (InclusiveFrom)
 				{
-					_validationResourceKey = Resources.ValidationKeys.GreaterThanOrEqual;
-					_validationResourceKeyWithProperty = Resources.ValidationKeys.GreaterThanOrEqual;
+					_validationResourceKey = Resources.Validation.__Keys.GreaterThanOrEqual;
+					_validationResourceKeyWithProperty = Resources.Validation.__Keys.GreaterThanOrEqual;
 					DefaultValidationMessage = DEFAULT_GreaterThanOrEqual;
 					DefaultValidationMessageWithProperty = DEFAULT_GreaterThanOrEqual_WithProperty;
 				}
 				else
 				{
-					_validationResourceKey = Resources.ValidationKeys.GreaterThan;
-					_validationResourceKeyWithProperty = Resources.ValidationKeys.GreaterThan;
+					_validationResourceKey = Resources.Validation.__Keys.GreaterThan;
+					_validationResourceKeyWithProperty = Resources.Validation.__Keys.GreaterThan;
 					DefaultValidationMessage = DEFAULT_GreaterThan;
 					DefaultValidationMessageWithProperty = DEFAULT_GreaterThan_WithProperty;
 				}
@@ -114,15 +114,15 @@ internal class RangeValidator<T, TProperty> : PropertyValidator<T, TProperty?>
 				{
 					if (InclusiveTo)
 					{
-						_validationResourceKey = Resources.ValidationKeys.InclusiveBetween;
-						_validationResourceKeyWithProperty = Resources.ValidationKeys.InclusiveBetween;
+						_validationResourceKey = Resources.Validation.__Keys.InclusiveBetween;
+						_validationResourceKeyWithProperty = Resources.Validation.__Keys.InclusiveBetween;
 						DefaultValidationMessage = DEFAULT_InclusiveBetween;
 						DefaultValidationMessageWithProperty = DEFAULT_InclusiveBetween_WithProperty;
 					}
 					else
 					{
-						_validationResourceKey = Resources.ValidationKeys.InclusiveExclusiveBetween;
-						_validationResourceKeyWithProperty = Resources.ValidationKeys.InclusiveExclusiveBetween;
+						_validationResourceKey = Resources.Validation.__Keys.InclusiveExclusiveBetween;
+						_validationResourceKeyWithProperty = Resources.Validation.__Keys.InclusiveExclusiveBetween;
 						DefaultValidationMessage = DEFAULT_InclusiveExclusiveBetween;
 						DefaultValidationMessageWithProperty = DEFAULT_InclusiveExclusiveBetween_WithProperty;
 					}
@@ -131,15 +131,15 @@ internal class RangeValidator<T, TProperty> : PropertyValidator<T, TProperty?>
 				{
 					if (InclusiveTo)
 					{
-						_validationResourceKey = Resources.ValidationKeys.ExclusiveInclusiveBetween;
-						_validationResourceKeyWithProperty = Resources.ValidationKeys.ExclusiveInclusiveBetween;
+						_validationResourceKey = Resources.Validation.__Keys.ExclusiveInclusiveBetween;
+						_validationResourceKeyWithProperty = Resources.Validation.__Keys.ExclusiveInclusiveBetween;
 						DefaultValidationMessage = DEFAULT_ExclusiveInclusiveBetween;
 						DefaultValidationMessageWithProperty = DEFAULT_ExclusiveInclusiveBetween_WithProperty;
 					}
 					else
 					{
-						_validationResourceKey = Resources.ValidationKeys.ExclusiveBetween;
-						_validationResourceKeyWithProperty = Resources.ValidationKeys.ExclusiveBetween;
+						_validationResourceKey = Resources.Validation.__Keys.ExclusiveBetween;
+						_validationResourceKeyWithProperty = Resources.Validation.__Keys.ExclusiveBetween;
 						DefaultValidationMessage = DEFAULT_ExclusiveBetween;
 						DefaultValidationMessageWithProperty = DEFAULT_ExclusiveBetween_WithProperty;
 					}
@@ -202,6 +202,7 @@ internal class RangeValidator<T, TProperty> : PropertyValidator<T, TProperty?>
 				return new ValidationResult(
 					new ValidationFailure(
 						ObjectPath,
+						context,
 						ValidatorType,
 						HasServerCondition,
 						ClientConditionDefinition,

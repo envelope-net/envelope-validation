@@ -55,22 +55,24 @@ internal class MultiEqualValidator<T, TProperty> : PropertyValidator<T, TPropert
 				: new ValidationResult(
 					new ValidationFailure(
 						ObjectPath,
+						context,
 						ValidatorType,
 						HasServerCondition,
 						ClientConditionDefinition,
-						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.MultiEqual, options?.MultiEqualMessageGetter),
-						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.MultiEqual_WithProperty, options?.MultiEqualMessageWithPropertyGetter),
+						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.MultiEqual, options?.MultiEqualMessageGetter),
+						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.MultiEqual_WithProperty, options?.MultiEqualMessageWithPropertyGetter),
 						FailureInfoFunc?.Invoke(ctx.InstanceToValidate)));
 
 		if (ValuesToCompare == null)
 			return new ValidationResult(
 					new ValidationFailure(
 						ObjectPath,
+						context,
 						ValidatorType,
 						HasServerCondition,
 						ClientConditionDefinition,
-						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.MultiEqual, options?.MultiEqualMessageGetter),
-						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.MultiEqual_WithProperty, options?.MultiEqualMessageWithPropertyGetter),
+						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.MultiEqual, options?.MultiEqualMessageGetter),
+						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.MultiEqual_WithProperty, options?.MultiEqualMessageWithPropertyGetter),
 						FailureInfoFunc?.Invoke(ctx.InstanceToValidate)));
 
 		if (Comparer == null)
@@ -79,11 +81,12 @@ internal class MultiEqualValidator<T, TProperty> : PropertyValidator<T, TPropert
 				: new ValidationResult(
 					new ValidationFailure(
 						ObjectPath,
+						context,
 						ValidatorType,
 						HasServerCondition,
 						ClientConditionDefinition,
-						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.MultiEqual, options?.MultiEqualMessageGetter),
-						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.MultiEqual_WithProperty, options?.MultiEqualMessageWithPropertyGetter),
+						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.MultiEqual, options?.MultiEqualMessageGetter),
+						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.MultiEqual_WithProperty, options?.MultiEqualMessageWithPropertyGetter),
 						FailureInfoFunc?.Invoke(ctx.InstanceToValidate)));
 		else
 			return ValuesToCompare.Any(x => Comparer.Equals(x, ctx.ValueToValidate))
@@ -91,11 +94,12 @@ internal class MultiEqualValidator<T, TProperty> : PropertyValidator<T, TPropert
 				: new ValidationResult(
 					new ValidationFailure(
 						ObjectPath,
+						context,
 						ValidatorType,
 						HasServerCondition,
 						ClientConditionDefinition,
-						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.MultiEqual, options?.MultiEqualMessageGetter),
-						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.MultiEqual_WithProperty, options?.MultiEqualMessageWithPropertyGetter),
+						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.MultiEqual, options?.MultiEqualMessageGetter),
+						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.MultiEqual_WithProperty, options?.MultiEqualMessageWithPropertyGetter),
 						FailureInfoFunc?.Invoke(ctx.InstanceToValidate)));
 	}
 
@@ -107,8 +111,8 @@ internal class MultiEqualValidator<T, TProperty> : PropertyValidator<T, TPropert
 			GetType().ToFriendlyFullName(),
 			HasServerCondition,
 			ClientConditionDefinition,
-			GetValidationMessage(default, default, Resources.ValidationKeys.MultiEqual, null),
-			GetValidationMessageWithProperty(default, default, Resources.ValidationKeys.MultiEqual_WithProperty, null))
+			GetValidationMessage(default, default, Resources.Validation.__Keys.MultiEqual, null),
+			GetValidationMessageWithProperty(default, default, Resources.Validation.__Keys.MultiEqual_WithProperty, null))
 		{
 			ValuesToCompare = ValuesToCompare,
 			Comparer = Comparer

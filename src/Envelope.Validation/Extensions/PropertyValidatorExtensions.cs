@@ -641,6 +641,24 @@ public static class PropertyValidatorExtensions
 		return propertyValidator;
 	}
 
+	public static PropertyValidator<T, string> ExactLength<T>(
+		this PropertyValidator<T, string> propertyValidator,
+		int length,
+		Func<T?, string?, string, string?>? messageGetter = null,
+		Func<T?, string?, string, string?>? messageWithPropertyGetter = null)
+	{
+		((IValidator)propertyValidator).AddValidatorInternal(new ExactLengthValidator<T>(
+			propertyValidator.ValueGetter,
+			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
+			propertyValidator.Condition,
+			propertyValidator.ClientConditionDefinition,
+			propertyValidator.FailureInfoFunc,
+			length,
+			messageGetter,
+			messageWithPropertyGetter));
+		return propertyValidator;
+	}
+
 	public static PropertyValidator<T, decimal> PrecisionScale<T>(
 		this PropertyValidator<T, decimal> propertyValidator,
 		int precision,

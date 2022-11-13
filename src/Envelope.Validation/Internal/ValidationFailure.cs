@@ -18,6 +18,7 @@ internal class ValidationFailure : IValidationFailure
 
 	public ValidationFailure(
 		IObjectPath objectPath,
+		ValidationContext context,
 		ValidatorType type,
 		bool hasServerCondition,
 		IClientConditionDefinition? clientConditionDefinition,
@@ -26,6 +27,18 @@ internal class ValidationFailure : IValidationFailure
 		string? detailInfo)
 	{
 		ObjectPath = objectPath?.Clone(ObjectPathCloneMode.BottomUp) ?? throw new ArgumentNullException(nameof(objectPath));
+
+		if (context != null && 0 < context.Indexes.Count)
+		{
+			var currentObjectPath = ObjectPath;
+			while (currentObjectPath != null)
+			{
+				if (context.Indexes.TryGetValue(currentObjectPath.Depth, out var index))
+					currentObjectPath.Index = index;
+
+				currentObjectPath = currentObjectPath.Parent;
+			}
+		}
 
 		Type = type;
 		HasServerCondition = hasServerCondition;

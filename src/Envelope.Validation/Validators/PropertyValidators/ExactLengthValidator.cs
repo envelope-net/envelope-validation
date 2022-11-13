@@ -6,33 +6,37 @@ using Envelope.Reflection.ObjectPaths;
 
 namespace Envelope.Validation.Validators.PropertyValidators;
 
-internal class NotDefaultOrEmptyValidator<T, TProperty> : PropertyValidator<T, TProperty?>
+internal class ExactLengthValidator<T> : PropertyValidator<T, string?>
 {
-	private const string DEFAULT_ValidationMessage = "Must not be empty.";
-	private const string DEFAULT_ValidationMessageWithProperty = "'{PropertyName}' must not be empty.";
+	private const string DEFAULT_ValidationMessage = "Must be {Length} characters long.";
+	private const string DEFAULT_ValidationMessageWithProperty = "'{PropertyName}' must be {Length} characters long.";
 
 	protected override string DefaultValidationMessage => DEFAULT_ValidationMessage;
 	protected override string DefaultValidationMessageWithProperty => DEFAULT_ValidationMessageWithProperty;
 
-	private readonly object? _defaultValue;
+	public int Length { get; }
 
-	public NotDefaultOrEmptyValidator(
-		Func<T, TProperty> valueGetter,
+	public ExactLengthValidator(
+		Func<T, string> valueGetter,
 		IObjectPath objectPath,
 		Func<T?, bool>? condition,
 		IClientConditionDefinition? clientConditionDefinition,
 		Func<T?, string?>? failureInfoFunc,
-		object? defaultValue,
-		Func<T?, TProperty?, string, string?>? messageGetter,
-		Func<T?, TProperty?, string, string?>? messageWithPropertyGetter)
-		: base(ValidatorType.NotDefaultOrEmpty, valueGetter, objectPath, condition, clientConditionDefinition, failureInfoFunc, messageGetter, messageWithPropertyGetter)
+		int length,
+		Func<T?, string?, string, string?>? messageGetter,
+		Func<T?, string?, string, string?>? messageWithPropertyGetter)
+		: base(ValidatorType.ExactLength, valueGetter, objectPath, condition, clientConditionDefinition, failureInfoFunc, messageGetter, messageWithPropertyGetter)
 	{
-		_defaultValue = defaultValue;
+		if (length <= 0)
+			throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} should be larger than 0.");
+
+		Length = length;
 	}
 
 	protected override IDictionary<string, object?> GetPlaceholderValues()
 		=> new Dictionary<string, object?>
 			{
+				{ nameof(Length), Length },
 				{ "PropertyName", GetDisplayName() }
 			};
 
@@ -41,10 +45,15 @@ internal class NotDefaultOrEmptyValidator<T, TProperty> : PropertyValidator<T, T
 		//if (string.IsNullOrWhiteSpace(ObjectPath.PropertyName))
 		//	throw new InvalidOperationException($"{nameof(ObjectPath)}.{nameof(ObjectPath.PropertyName)} == null");
 
-		if (context is not ValidationContext<T, TProperty?> ctx)
+		if (context is not ValidationContext<T, string?> ctx)
 			throw new ArgumentException($"{nameof(context)} must be type of {typeof(ValidationContext<T>).FullName}", nameof(context));
 
-		if (ValidationHelper.IsDefaultOrEmpty(ctx.ValueToValidate, _defaultValue))
+		if (ctx.ValueToValidate == null)
+			return null;
+
+		if (Length == ctx.ValueToValidate.Length)
+			return null;
+		else
 			return new ValidationResult(
 				new ValidationFailure(
 					ObjectPath,
@@ -52,11 +61,9 @@ internal class NotDefaultOrEmptyValidator<T, TProperty> : PropertyValidator<T, T
 					ValidatorType,
 					HasServerCondition,
 					ClientConditionDefinition,
-					GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.NotDefaultOrEmpty, options?.NotDefaultOrEmptyMessageGetter),
-					GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.NotDefaultOrEmpty_WithProperty, options?.NotDefaultOrEmptyMessageWithPropertyGetter),
+					GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.ExactLength, options?.LengthMessageGetter),
+					GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.ExactLength_WithProperty, options?.LengthMessageWithPropertyGetter),
 					FailureInfoFunc?.Invoke(ctx.InstanceToValidate)));
-		else
-			return null;
 	}
 
 	public override IValidatorDescriptor ToDescriptor()
@@ -67,9 +74,10 @@ internal class NotDefaultOrEmptyValidator<T, TProperty> : PropertyValidator<T, T
 			GetType().ToFriendlyFullName(),
 			HasServerCondition,
 			ClientConditionDefinition,
-			GetValidationMessage(default, default, Resources.Validation.__Keys.NotDefaultOrEmpty, null),
-			GetValidationMessageWithProperty(default, default, Resources.Validation.__Keys.NotDefaultOrEmpty_WithProperty, null))
+			GetValidationMessage(default, default, Resources.Validation.__Keys.ExactLength, null),
+			GetValidationMessageWithProperty(default, default, Resources.Validation.__Keys.ExactLength_WithProperty, null))
 		{
-			DefaultValue = _defaultValue
+			MaxLength = Length,
+			MinLength = Length
 		};
 }

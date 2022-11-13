@@ -20,5 +20,6 @@ public enum ValidatorType
 	PrecisionScale,
 	RegEx,
 	ErrorObject,
-	ErrorProperty
+	ErrorProperty,
+	ExactLength,
 }

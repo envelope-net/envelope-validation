@@ -54,11 +54,12 @@ internal class NotEqualValidator<T, TProperty> : PropertyValidator<T, TProperty?
 				? new ValidationResult(
 					new ValidationFailure(
 						ObjectPath,
+						context,
 						ValidatorType,
 						HasServerCondition,
 						ClientConditionDefinition,
-						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.NotEqual, options?.NotEqualMessageGetter),
-						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.NotEqual_WithProperty, options?.NotEqualMessageWithPropertyGetter),
+						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.NotEqual, options?.NotEqualMessageGetter),
+						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.NotEqual_WithProperty, options?.NotEqualMessageWithPropertyGetter),
 						FailureInfoFunc?.Invoke(ctx.InstanceToValidate)))
 				: null;
 
@@ -70,11 +71,12 @@ internal class NotEqualValidator<T, TProperty> : PropertyValidator<T, TProperty?
 				? new ValidationResult(
 					new ValidationFailure(
 						ObjectPath,
+						context,
 						ValidatorType,
 						HasServerCondition,
 						ClientConditionDefinition,
-						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.NotEqual, options?.NotEqualMessageGetter),
-						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.NotEqual_WithProperty, options?.NotEqualMessageWithPropertyGetter),
+						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.NotEqual, options?.NotEqualMessageGetter),
+						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.NotEqual_WithProperty, options?.NotEqualMessageWithPropertyGetter),
 						FailureInfoFunc?.Invoke(ctx.InstanceToValidate)))
 				: null;
 		else
@@ -82,11 +84,12 @@ internal class NotEqualValidator<T, TProperty> : PropertyValidator<T, TProperty?
 				? new ValidationResult(
 					new ValidationFailure(
 						ObjectPath,
+						context,
 						ValidatorType,
 						HasServerCondition,
 						ClientConditionDefinition,
-						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.NotEqual, options?.NotEqualMessageGetter),
-						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.NotEqual_WithProperty, options?.NotEqualMessageWithPropertyGetter),
+						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.NotEqual, options?.NotEqualMessageGetter),
+						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.NotEqual_WithProperty, options?.NotEqualMessageWithPropertyGetter),
 						FailureInfoFunc?.Invoke(ctx.InstanceToValidate)))
 				: null;
 	}
@@ -99,8 +102,8 @@ internal class NotEqualValidator<T, TProperty> : PropertyValidator<T, TProperty?
 			GetType().ToFriendlyFullName(),
 			HasServerCondition,
 			ClientConditionDefinition,
-			GetValidationMessage(default, default, Resources.ValidationKeys.NotEqual, null),
-			GetValidationMessageWithProperty(default, default, Resources.ValidationKeys.NotEqual_WithProperty, null))
+			GetValidationMessage(default, default, Resources.Validation.__Keys.NotEqual, null),
+			GetValidationMessageWithProperty(default, default, Resources.Validation.__Keys.NotEqual_WithProperty, null))
 		{
 			ValueToCompare = ValueToCompare,
 			Comparer = Comparer

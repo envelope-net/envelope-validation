@@ -61,11 +61,12 @@ internal class LengthValidator<T> : PropertyValidator<T, string?>
 			return new ValidationResult(
 				new ValidationFailure(
 					ObjectPath,
+					context,
 					ValidatorType,
 					HasServerCondition,
 					ClientConditionDefinition,
-					GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.Length, options?.LengthMessageGetter),
-					GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.Length_WithProperty, options?.LengthMessageWithPropertyGetter),
+					GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.Length, options?.LengthMessageGetter),
+					GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.Length_WithProperty, options?.LengthMessageWithPropertyGetter),
 					FailureInfoFunc?.Invoke(ctx.InstanceToValidate)));
 	}
 
@@ -77,8 +78,8 @@ internal class LengthValidator<T> : PropertyValidator<T, string?>
 			GetType().ToFriendlyFullName(),
 			HasServerCondition,
 			ClientConditionDefinition,
-			GetValidationMessage(default, default, Resources.ValidationKeys.Length, null),
-			GetValidationMessageWithProperty(default, default, Resources.ValidationKeys.Length_WithProperty, null))
+			GetValidationMessage(default, default, Resources.Validation.__Keys.Length, null),
+			GetValidationMessageWithProperty(default, default, Resources.Validation.__Keys.Length_WithProperty, null))
 		{
 			MaxLength = MaxLength,
 			MinLength = MinLength
