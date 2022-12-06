@@ -1,6 +1,4 @@
-﻿using Envelope.Reflection.ObjectPaths;
-
-namespace Envelope.Validation.Internal;
+﻿namespace Envelope.Validation.Internal;
 
 internal class ValidationContext
 {
