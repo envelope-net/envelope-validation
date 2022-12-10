@@ -45,6 +45,7 @@ internal class ErrorValidator<T, TProperty> : PropertyValidator<T, TProperty?>
 			return new ValidationResult(
 				new ValidationFailure(
 					ObjectPath,
+					context,
 					ValidatorType,
 					HasServerCondition,
 					ClientConditionDefinition,
@@ -61,6 +62,7 @@ internal class ErrorValidator<T, TProperty> : PropertyValidator<T, TProperty?>
 			return new ValidationResult(
 				new ValidationFailure(
 					ObjectPath,
+					context,
 					ValidatorType,
 					HasServerCondition,
 					ClientConditionDefinition,

@@ -135,6 +135,12 @@
   <data name="Equal_WithProperty" xml:space="preserve">
     <value>Hodnota poľa '{PropertyName}' musí byť rovná '{ValueToCompare}'.</value>
   </data>
+  <data name="ExactLength" xml:space="preserve">
+    <value>Dĺžka poľa musí byť {Length} znakov.</value>
+  </data>
+  <data name="ExactLength_WithProperty" xml:space="preserve">
+    <value>Dĺžka poľa '{PropertyName}' musí byť {Length} znakov.</value>
+  </data>
   <data name="ExclusiveBetween" xml:space="preserve">
     <value>Hodnota poľa musí byť väčšia ako {From} a menšia ako {To}.</value>
   </data>

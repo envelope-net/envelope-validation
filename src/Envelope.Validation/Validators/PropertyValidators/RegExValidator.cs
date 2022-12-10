@@ -54,11 +54,12 @@ internal class RegExValidator<T> : PropertyValidator<T, string?>
 			return new ValidationResult(
 				new ValidationFailure(
 					ObjectPath,
+					context,
 					ValidatorType,
 					HasServerCondition,
 					ClientConditionDefinition,
-					GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.RegEx, options?.RegExMessageGetter),
-					GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.RegEx_WithProperty, options?.RegExMessageWithPropertyGetter),
+					GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.RegEx, options?.RegExMessageGetter),
+					GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.RegEx_WithProperty, options?.RegExMessageWithPropertyGetter),
 					FailureInfoFunc?.Invoke(ctx.InstanceToValidate)));
 	}
 
@@ -70,8 +71,8 @@ internal class RegExValidator<T> : PropertyValidator<T, string?>
 			GetType().ToFriendlyFullName(),
 			HasServerCondition,
 			ClientConditionDefinition,
-			GetValidationMessage(default, default, Resources.ValidationKeys.RegEx, null),
-			GetValidationMessageWithProperty(default, default, Resources.ValidationKeys.RegEx_WithProperty, null))
+			GetValidationMessage(default, default, Resources.Validation.__Keys.RegEx, null),
+			GetValidationMessageWithProperty(default, default, Resources.Validation.__Keys.RegEx_WithProperty, null))
 		{
 			Pattern = Pattern
 		};

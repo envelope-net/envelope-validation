@@ -44,6 +44,7 @@ public class ErrorValidator<T> : Validator<T>
 			result.AddFailure(
 				new ValidationFailure(
 					ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
+					context,
 					ValidatorType,
 					HasServerCondition,
 					null,

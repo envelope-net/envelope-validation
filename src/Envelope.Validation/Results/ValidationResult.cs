@@ -1,6 +1,4 @@
-﻿using Envelope.Validation;
-
-namespace Envelope.Validation.Results;
+﻿namespace Envelope.Validation.Results;
 
 internal class ValidationResult : IValidationResult
 {

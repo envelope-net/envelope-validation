@@ -1,7 +1,6 @@
-﻿using Envelope.Validation.Client;
+﻿using Envelope.Reflection.ObjectPaths;
+using Envelope.Validation.Client;
 using Envelope.Validation.Results;
-using Envelope.Reflection.ObjectPaths;
-using Envelope.Validation;
 
 namespace Envelope.Validation.Internal;
 
@@ -18,6 +17,7 @@ internal class ValidationFailure : IValidationFailure
 
 	public ValidationFailure(
 		IObjectPath objectPath,
+		Dictionary<int, int>? objectPathIndexes,
 		ValidatorType type,
 		bool hasServerCondition,
 		IClientConditionDefinition? clientConditionDefinition,
@@ -26,6 +26,18 @@ internal class ValidationFailure : IValidationFailure
 		string? detailInfo)
 	{
 		ObjectPath = objectPath?.Clone(ObjectPathCloneMode.BottomUp) ?? throw new ArgumentNullException(nameof(objectPath));
+
+		if (0 < objectPathIndexes?.Count)
+		{
+			var currentObjectPath = ObjectPath;
+			while (currentObjectPath != null)
+			{
+				if (objectPathIndexes.TryGetValue(currentObjectPath.Depth, out var index))
+					currentObjectPath.Index = index;
+
+				currentObjectPath = currentObjectPath.Parent;
+			}
+		}
 
 		Type = type;
 		HasServerCondition = hasServerCondition;
@@ -37,6 +49,27 @@ internal class ValidationFailure : IValidationFailure
 		Message = message;
 		MessageWithPropertyName = messageWithPropertyName;
 		DetailInfo = detailInfo;
+	}
+
+	public ValidationFailure(
+		IObjectPath objectPath,
+		ValidationContext context,
+		ValidatorType type,
+		bool hasServerCondition,
+		IClientConditionDefinition? clientConditionDefinition,
+		string message,
+		string messageWithPropertyName,
+		string? detailInfo)
+		: this(
+			objectPath,
+			context?.Indexes,
+			type,
+			hasServerCondition,
+			clientConditionDefinition,
+			message,
+			messageWithPropertyName,
+			detailInfo)
+	{
 	}
 
 	public override string ToString()

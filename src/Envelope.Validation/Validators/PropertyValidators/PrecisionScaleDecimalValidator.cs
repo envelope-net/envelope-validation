@@ -73,11 +73,12 @@ internal class PrecisionScaleDecimalValidator<T, TProperty> : PropertyValidator<
 			new ValidationResult(
 				new ValidationFailure(
 					ObjectPath,
+					context,
 					ValidatorType,
 					HasServerCondition,
 					ClientConditionDefinition,
-					GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.PrecisionScale, options?.PrecisionScaleMessageGetter),
-					GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.PrecisionScale_WithProperty, options?.PrecisionScaleMessageWithPropertyGetter),
+					GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.PrecisionScale, options?.PrecisionScaleMessageGetter),
+					GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.PrecisionScale_WithProperty, options?.PrecisionScaleMessageWithPropertyGetter),
 					FailureInfoFunc?.Invoke(ctx.InstanceToValidate)));
 		}
 
@@ -92,8 +93,8 @@ internal class PrecisionScaleDecimalValidator<T, TProperty> : PropertyValidator<
 			GetType().ToFriendlyFullName(),
 			HasServerCondition,
 			ClientConditionDefinition,
-			GetValidationMessage(default, default, Resources.ValidationKeys.PrecisionScale, null),
-			GetValidationMessageWithProperty(default, default, Resources.ValidationKeys.PrecisionScale_WithProperty, null))
+			GetValidationMessage(default, default, Resources.Validation.__Keys.PrecisionScale, null),
+			GetValidationMessageWithProperty(default, default, Resources.Validation.__Keys.PrecisionScale_WithProperty, null))
 		{
 			Scale = Scale,
 			Precision = Precision,

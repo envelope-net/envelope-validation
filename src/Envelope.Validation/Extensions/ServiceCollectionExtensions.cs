@@ -1,6 +1,5 @@
-﻿using Envelope.Validation.Internal;
-using Envelope.Exceptions;
-using Envelope.Extensions;
+﻿using Envelope.Extensions;
+using Envelope.Validation.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Reflection;

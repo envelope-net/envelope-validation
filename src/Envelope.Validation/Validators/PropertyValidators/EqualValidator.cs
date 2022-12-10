@@ -55,22 +55,24 @@ internal class EqualValidator<T, TProperty> : PropertyValidator<T, TProperty?>
 				: new ValidationResult(
 					new ValidationFailure(
 						ObjectPath,
+						context,
 						ValidatorType,
 						HasServerCondition,
 						ClientConditionDefinition,
-						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.Equal, options?.EqualMessageGetter),
-						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.Equal_WithProperty, options?.EqualMessageWithPropertyGetter),
+						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.Equal, options?.EqualMessageGetter),
+						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.Equal_WithProperty, options?.EqualMessageWithPropertyGetter),
 						FailureInfoFunc?.Invoke(ctx.InstanceToValidate)));
 
 		if (ValueToCompare == null)
 			new ValidationResult(
 					new ValidationFailure(
 						ObjectPath,
+						context,
 						ValidatorType,
 						HasServerCondition,
 						ClientConditionDefinition,
-						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.Equal, options?.EqualMessageGetter),
-						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.Equal_WithProperty, options?.EqualMessageWithPropertyGetter),
+						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.Equal, options?.EqualMessageGetter),
+						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.Equal_WithProperty, options?.EqualMessageWithPropertyGetter),
 						FailureInfoFunc?.Invoke(ctx.InstanceToValidate)));
 
 		if (Comparer == null)
@@ -79,11 +81,12 @@ internal class EqualValidator<T, TProperty> : PropertyValidator<T, TProperty?>
 				: new ValidationResult(
 					new ValidationFailure(
 						ObjectPath,
+						context,
 						ValidatorType,
 						HasServerCondition,
 						ClientConditionDefinition,
-						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.Equal, options?.EqualMessageGetter),
-						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.Equal_WithProperty, options?.EqualMessageWithPropertyGetter),
+						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.Equal, options?.EqualMessageGetter),
+						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.Equal_WithProperty, options?.EqualMessageWithPropertyGetter),
 						FailureInfoFunc?.Invoke(ctx.InstanceToValidate)));
 		else
 			return Comparer.Equals(ValueToCompare, ctx.ValueToValidate)
@@ -91,11 +94,12 @@ internal class EqualValidator<T, TProperty> : PropertyValidator<T, TProperty?>
 				: new ValidationResult(
 					new ValidationFailure(
 						ObjectPath,
+						context,
 						ValidatorType,
 						HasServerCondition,
 						ClientConditionDefinition,
-						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.Equal, options?.EqualMessageGetter),
-						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.ValidationKeys.Equal_WithProperty, options?.EqualMessageWithPropertyGetter),
+						GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.Equal, options?.EqualMessageGetter),
+						GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.Equal_WithProperty, options?.EqualMessageWithPropertyGetter),
 						FailureInfoFunc?.Invoke(ctx.InstanceToValidate)));
 	}
 
@@ -107,8 +111,8 @@ internal class EqualValidator<T, TProperty> : PropertyValidator<T, TProperty?>
 			GetType().ToFriendlyFullName(),
 			HasServerCondition,
 			ClientConditionDefinition,
-			GetValidationMessage(default, default, Resources.ValidationKeys.Equal, null),
-			GetValidationMessageWithProperty(default, default, Resources.ValidationKeys.Equal_WithProperty, null))
+			GetValidationMessage(default, default, Resources.Validation.__Keys.Equal, null),
+			GetValidationMessageWithProperty(default, default, Resources.Validation.__Keys.Equal_WithProperty, null))
 		{
 			ValueToCompare = ValueToCompare,
 			Comparer = Comparer
