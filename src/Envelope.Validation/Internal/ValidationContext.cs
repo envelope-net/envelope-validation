@@ -6,7 +6,7 @@ internal class ValidationContext
 
 	public ValidationContext(Dictionary<int, int>? indexes)
 	{
-		Indexes = indexes ?? new Dictionary<int, int>();
+		Indexes = indexes?.ToDictionary(x => x.Key, x => x.Value) ?? new Dictionary<int, int>();
 	}
 }
 
