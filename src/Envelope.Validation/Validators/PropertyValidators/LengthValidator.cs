@@ -8,16 +8,42 @@ namespace Envelope.Validation.Validators.PropertyValidators;
 
 internal class LengthValidator<T> : PropertyValidator<T, string?>
 {
-	private const string DEFAULT_ValidationMessage = "Must be between {MinLength} and {MaxLength} characters.";
-	private const string DEFAULT_ValidationMessageWithProperty = "'{PropertyName}' must be between {MinLength} and {MaxLength} characters.";
+	public enum LengthTypeValidatorEnum
+	{
+		Min,
+		Max,
+		Range
+	}
 
-	protected override string DefaultValidationMessage => DEFAULT_ValidationMessage;
-	protected override string DefaultValidationMessageWithProperty => DEFAULT_ValidationMessageWithProperty;
+	private const string DEFAULT_Min_ValidationMessage = "Must be at least {MinLength} characters.";
+	private const string DEFAULT_Min_ValidationMessageWithProperty = "'{PropertyName}' must be at least {MinLength} characters.";
 
+	private const string DEFAULT_Max_ValidationMessage = "Must be at the most {MaxLength} characters.";
+	private const string DEFAULT_Max_ValidationMessageWithProperty = "'{PropertyName}' must be at the most {MaxLength} characters.";
+
+	private const string DEFAULT_Range_ValidationMessage = "Must be between {MinLength} and {MaxLength} characters.";
+	private const string DEFAULT_Range_ValidationMessageWithProperty = "'{PropertyName}' must be between {MinLength} and {MaxLength} characters.";
+
+	public LengthTypeValidatorEnum LengthTypeValidator { get; }
 	public int MinLength { get; }
 	public int MaxLength { get; }
 
+	protected override string DefaultValidationMessage => LengthTypeValidator switch
+	{
+		LengthValidator<T>.LengthTypeValidatorEnum.Min => DEFAULT_Min_ValidationMessage,
+		LengthValidator<T>.LengthTypeValidatorEnum.Max => DEFAULT_Max_ValidationMessage,
+		_ => DEFAULT_Range_ValidationMessage,
+	};
+
+	protected override string DefaultValidationMessageWithProperty => LengthTypeValidator switch
+	{
+		LengthValidator<T>.LengthTypeValidatorEnum.Min => DEFAULT_Min_ValidationMessageWithProperty,
+		LengthValidator<T>.LengthTypeValidatorEnum.Max => DEFAULT_Max_ValidationMessageWithProperty,
+		_ => DEFAULT_Range_ValidationMessageWithProperty,
+	};
+
 	public LengthValidator(
+		LengthTypeValidatorEnum lengthTypeValidator,
 		Func<T, string> valueGetter,
 		IObjectPath objectPath,
 		Func<T?, bool>? condition,
@@ -32,6 +58,7 @@ internal class LengthValidator<T> : PropertyValidator<T, string?>
 		if (maxLength < minLength)
 			throw new ArgumentOutOfRangeException(nameof(maxLength), $"{nameof(maxLength)} should be larger than {nameof(minLength)}.");
 
+		LengthTypeValidator = lengthTypeValidator;
 		MinLength = minLength;
 		MaxLength = maxLength;
 	}
@@ -58,6 +85,32 @@ internal class LengthValidator<T> : PropertyValidator<T, string?>
 		if (MinLength <= ctx.ValueToValidate.Length && ctx.ValueToValidate.Length <= MaxLength)
 			return null;
 		else
+		{
+			string resKey;
+			string resKey_WithProperty;
+			switch (LengthTypeValidator)
+			{
+				case LengthValidator<T>.LengthTypeValidatorEnum.Min:
+					{
+						resKey = Resources.Validation.__Keys.Length_Min;
+						resKey_WithProperty = Resources.Validation.__Keys.Length_Min_WithProperty;
+					}
+					break;
+				case LengthValidator<T>.LengthTypeValidatorEnum.Max:
+					{
+						resKey = Resources.Validation.__Keys.Length_Max;
+						resKey_WithProperty = Resources.Validation.__Keys.Length_Max_WithProperty;
+					}
+					break;
+				case LengthValidator<T>.LengthTypeValidatorEnum.Range:
+				default:
+					{
+						resKey = Resources.Validation.__Keys.Length_Range;
+						resKey_WithProperty = Resources.Validation.__Keys.Length_Range_WithProperty;
+					}
+					break;
+			}
+
 			return new ValidationResult(
 				new ValidationFailure(
 					ObjectPath,
@@ -65,23 +118,51 @@ internal class LengthValidator<T> : PropertyValidator<T, string?>
 					ValidatorType,
 					HasServerCondition,
 					ClientConditionDefinition,
-					GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.Length, options?.LengthMessageGetter),
-					GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, Resources.Validation.__Keys.Length_WithProperty, options?.LengthMessageWithPropertyGetter),
+					GetValidationMessage(ctx.InstanceToValidate, ctx.ValueToValidate, resKey, options?.LengthMessageGetter),
+					GetValidationMessageWithProperty(ctx.InstanceToValidate, ctx.ValueToValidate, resKey_WithProperty, options?.LengthMessageWithPropertyGetter),
 					FailureInfoFunc?.Invoke(ctx.InstanceToValidate)));
+		}
 	}
 
 	public override IValidatorDescriptor ToDescriptor()
-		=> new ValidationDescriptor(
+	{
+		string resKey;
+		string resKey_WithProperty;
+		switch (LengthTypeValidator)
+		{
+			case LengthValidator<T>.LengthTypeValidatorEnum.Min:
+				{
+					resKey = Resources.Validation.__Keys.Length_Min;
+					resKey_WithProperty = Resources.Validation.__Keys.Length_Min_WithProperty;
+				}
+				break;
+			case LengthValidator<T>.LengthTypeValidatorEnum.Max:
+				{
+					resKey = Resources.Validation.__Keys.Length_Max;
+					resKey_WithProperty = Resources.Validation.__Keys.Length_Max_WithProperty;
+				}
+				break;
+			case LengthValidator<T>.LengthTypeValidatorEnum.Range:
+			default:
+				{
+					resKey = Resources.Validation.__Keys.Length_Range;
+					resKey_WithProperty = Resources.Validation.__Keys.Length_Range_WithProperty;
+				}
+				break;
+		}
+
+		return new ValidationDescriptor(
 			typeof(T),
 			ObjectPath,
 			ValidatorType,
 			GetType().ToFriendlyFullName(),
 			HasServerCondition,
 			ClientConditionDefinition,
-			GetValidationMessage(default, default, Resources.Validation.__Keys.Length, null),
-			GetValidationMessageWithProperty(default, default, Resources.Validation.__Keys.Length_WithProperty, null))
+			GetValidationMessage(default, default, resKey, null),
+			GetValidationMessageWithProperty(default, default, resKey_WithProperty, null))
 		{
 			MaxLength = MaxLength,
 			MinLength = MinLength
 		};
+	}
 }

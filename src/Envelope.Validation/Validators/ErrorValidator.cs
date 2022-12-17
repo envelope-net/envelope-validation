@@ -13,18 +13,15 @@ public class ErrorValidator<T> : Validator<T>
 
 	public ErrorValidator(
 		IObjectPath objectPath,
-		Func<T?, bool> condition,
+		Func<T?, bool> serverCondition,
 		Func<T?, string> errorMessage,
 		Func<T?, string?>? failureInfoFunc)
 		: base(ValidatorType.ErrorObject, objectPath, true, null)
 	{
-		Condition = condition ?? throw new ArgumentNullException(nameof(condition));
+		Condition = serverCondition ?? throw new ArgumentNullException(nameof(serverCondition));
 		FailureInfoFunc = failureInfoFunc;
 
 		ErrorMessageFunc = errorMessage ?? throw new ArgumentNullException(nameof(errorMessage));
-
-		if (condition == null)
-			throw new ArgumentNullException(nameof(condition));
 	}
 
 	internal override ValidationResult? Validate(ValidationContext context, ValidationOptions? options)

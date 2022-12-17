@@ -179,6 +179,12 @@ public static class ClientConditionExtensions
 	public static IClientConditionDefinition IsNotNull<T, TProperty>(this ClientCondition<T> clientCondition, Expression<Func<T, TProperty?>> property)
 		=> SetClientCondition(clientCondition, Operators.IsNotNull, property, (TProperty?)default);
 
+	public static IClientConditionDefinition DefaultOrEmpty<T, TProperty>(this ClientCondition<T> clientCondition, Expression<Func<T, TProperty?>> property)
+		=> SetClientCondition(clientCondition, Operators.DefaultOrEmpty, property, (TProperty?)typeof(TProperty).GetDefaultNullableValue());
+
+	public static IClientConditionDefinition NotDefaultOrEmpty<T, TProperty>(this ClientCondition<T> clientCondition, Expression<Func<T, TProperty?>> property)
+		=> SetClientCondition(clientCondition, Operators.NotDefaultOrEmpty, property, (TProperty?)typeof(TProperty).GetDefaultNullableValue());
+
 	public static IClientConditionDefinition And<T>(this ClientCondition<T> clientCondition, Action<ClientCondition<T>> leftCondition, Action<ClientCondition<T>> rightCondition)
 	{
 		if (leftCondition == null)

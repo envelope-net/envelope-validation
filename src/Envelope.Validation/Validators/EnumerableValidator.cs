@@ -1,8 +1,6 @@
-﻿using Envelope.Validation.Client;
+﻿using Envelope.Reflection.ObjectPaths;
 using Envelope.Validation.Internal;
 using Envelope.Validation.Results;
-using Envelope.Extensions;
-using Envelope.Reflection.ObjectPaths;
 
 namespace Envelope.Validation.Validators;
 
@@ -17,12 +15,12 @@ public class EnumerableValidator<T, TItem> : Validator<TItem>, IEnumerableValida
 	public EnumerableValidator(
 		Func<T, IEnumerable<TItem>> valueGetter,
 		IObjectPath objectPath,
-		Func<T?, bool>? condition,
+		Func<T?, bool>? serverCondition,
 		Func<T?, string?>? failureInfoFunc)
-		: base(ValidatorType.EnumerableValidator, objectPath, condition != null, null)
+		: base(ValidatorType.EnumerableValidator, objectPath, serverCondition != null, null)
 	{
 		ValueGetter = valueGetter ?? throw new ArgumentNullException(nameof(valueGetter));
-		Condition = condition;
+		Condition = serverCondition;
 		FailureInfoFunc = failureInfoFunc;
 	}
 

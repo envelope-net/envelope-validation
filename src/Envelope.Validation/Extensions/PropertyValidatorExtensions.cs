@@ -590,6 +590,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, string?, string, string?>? messageWithPropertyGetter = null)
 	{
 		((IValidator)propertyValidator).AddValidatorInternal(new LengthValidator<T>(
+			LengthValidator<T>.LengthTypeValidatorEnum.Min,
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -609,6 +610,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, string?, string, string?>? messageWithPropertyGetter = null)
 	{
 		((IValidator)propertyValidator).AddValidatorInternal(new LengthValidator<T>(
+			LengthValidator<T>.LengthTypeValidatorEnum.Max,
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,
@@ -629,6 +631,7 @@ public static class PropertyValidatorExtensions
 		Func<T?, string?, string, string?>? messageWithPropertyGetter = null)
 	{
 		((IValidator)propertyValidator).AddValidatorInternal(new LengthValidator<T>(
+			LengthValidator<T>.LengthTypeValidatorEnum.Range,
 			propertyValidator.ValueGetter,
 			propertyValidator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp),
 			propertyValidator.Condition,

@@ -15,12 +15,12 @@ public class NavigationValidator<T, TNavigation> : Validator<TNavigation>, INavi
 	public NavigationValidator(
 		Func<T, TNavigation> valueGetter,
 		IObjectPath objectPath,
-		Func<T?, bool>? condition,
+		Func<T?, bool>? serverCondition,
 		Func<T?, string?>? failureInfoFunc)
-		: base(ValidatorType.NavigationValidator, objectPath, condition != null, null)
+		: base(ValidatorType.NavigationValidator, objectPath, serverCondition != null, null)
 	{
 		ValueGetter = valueGetter ?? throw new ArgumentNullException(nameof(valueGetter));
-		Condition = condition;
+		Condition = serverCondition;
 		FailureInfoFunc = failureInfoFunc;
 	}
 

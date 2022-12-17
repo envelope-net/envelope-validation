@@ -94,14 +94,28 @@ public partial class Resources
 			public const string InclusiveExclusiveBetween_WithProperty_p_PropertyName = "PropertyName";
 			public const string InclusiveExclusiveBetween_WithProperty_p_To = "To";
 
-			public const string Length = "Length";
-			public const string Length_p_MaxLength = "MaxLength";
-			public const string Length_p_MinLength = "MinLength";
+			public const string Length_Max = "Length_Max";
+			public const string Length_Max_p_MaxLength = "MaxLength";
 
-			public const string Length_WithProperty = "Length_WithProperty";
-			public const string Length_WithProperty_p_MaxLength = "MaxLength";
-			public const string Length_WithProperty_p_MinLength = "MinLength";
-			public const string Length_WithProperty_p_PropertyName = "PropertyName";
+			public const string Length_Max_WithProperty = "Length_Max_WithProperty";
+			public const string Length_Max_WithProperty_p_MaxLength = "MaxLength";
+			public const string Length_Max_WithProperty_p_PropertyName = "PropertyName";
+
+			public const string Length_Min = "Length_Min";
+			public const string Length_Min_p_MinLength = "MinLength";
+
+			public const string Length_Min_WithProperty = "Length_Min_WithProperty";
+			public const string Length_Min_WithProperty_p_MinLength = "MinLength";
+			public const string Length_Min_WithProperty_p_PropertyName = "PropertyName";
+
+			public const string Length_Range = "Length_Range";
+			public const string Length_Range_p_MaxLength = "MaxLength";
+			public const string Length_Range_p_MinLength = "MinLength";
+
+			public const string Length_Range_WithProperty = "Length_Range_WithProperty";
+			public const string Length_Range_WithProperty_p_MaxLength = "MaxLength";
+			public const string Length_Range_WithProperty_p_MinLength = "MinLength";
+			public const string Length_Range_WithProperty_p_PropertyName = "PropertyName";
 
 			public const string LessThan = "LessThan";
 			public const string LessThan_p_ValueToCompare = "ValueToCompare";
