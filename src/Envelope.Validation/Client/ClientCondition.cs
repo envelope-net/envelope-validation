@@ -1,4 +1,5 @@
 ﻿using Envelope.Extensions;
+using Envelope.Validation.Internal;
 using System.Text;
 
 namespace Envelope.Validation.Client;
@@ -67,41 +68,26 @@ public class ClientCondition<T> : IClientConditionDefinition
 		var propertyValue = PropertyGetter.Invoke(obj);
 		var valueToCompare = ValueGetter.Invoke(obj);
 
-		switch (Operator.Value)
+		return Operator.Value switch
 		{
-			case Operators.EqualsTo:
-				return propertyValue == null ? valueToCompare == null : propertyValue.Equals(valueToCompare);
-			case Operators.NotEqualsTo:
-				return propertyValue == null ? valueToCompare != null : !propertyValue.Equals(valueToCompare);
-			case Operators.LessThan:
-				return propertyValue != null && ((IComparable)propertyValue).CompareTo(valueToCompare) < 0;
-			case Operators.LessThanOrEqualTo:
-				return propertyValue != null && ((IComparable)propertyValue).CompareTo(valueToCompare) <= 0;
-			case Operators.GreaterThan:
-				return propertyValue != null && ((IComparable)propertyValue).CompareTo(valueToCompare) > 0;
-			case Operators.GreaterThanOrEqualTo:
-				return propertyValue != null && ((IComparable)propertyValue).CompareTo(valueToCompare) >= 0;
-			case Operators.StartsWith:
-				return propertyValue?.ToString()?.StartsWithSafe(valueToCompare?.ToString()) ?? false;
-			case Operators.EndsWith:
-				return propertyValue?.ToString()?.EndsWithSafe(valueToCompare?.ToString()) ?? false;
-			case Operators.Contains:
-				return propertyValue?.ToString()?.ContainsSafe(valueToCompare?.ToString()) ?? false;
-			case Operators.NotStartsWith:
-				return !(propertyValue?.ToString()?.StartsWithSafe(valueToCompare?.ToString()) ?? false);
-			case Operators.NotEndsWith:
-				return !(propertyValue?.ToString()?.EndsWithSafe(valueToCompare?.ToString()) ?? false);
-			case Operators.NotContains:
-				return !(propertyValue?.ToString()?.ContainsSafe(valueToCompare?.ToString()) ?? false);
-			case Operators.IsNull:
-				return propertyValue == null;
-			case Operators.IsNotNull:
-				return propertyValue != null;
-			default:
-				break;
-		}
-
-		throw new NotSupportedException($"Not supported {nameof(Operator)} = {Operator}");
+			Operators.EqualsTo => propertyValue == null ? valueToCompare == null : propertyValue.Equals(valueToCompare),
+			Operators.NotEqualsTo => propertyValue == null ? valueToCompare != null : !propertyValue.Equals(valueToCompare),
+			Operators.LessThan => propertyValue != null && ((IComparable)propertyValue).CompareTo(valueToCompare) < 0,
+			Operators.LessThanOrEqualTo => propertyValue != null && ((IComparable)propertyValue).CompareTo(valueToCompare) <= 0,
+			Operators.GreaterThan => propertyValue != null && ((IComparable)propertyValue).CompareTo(valueToCompare) > 0,
+			Operators.GreaterThanOrEqualTo => propertyValue != null && ((IComparable)propertyValue).CompareTo(valueToCompare) >= 0,
+			Operators.StartsWith => propertyValue?.ToString()?.StartsWithSafe(valueToCompare?.ToString()) ?? false,
+			Operators.EndsWith => propertyValue?.ToString()?.EndsWithSafe(valueToCompare?.ToString()) ?? false,
+			Operators.Contains => propertyValue?.ToString()?.ContainsSafe(valueToCompare?.ToString()) ?? false,
+			Operators.NotStartsWith => !(propertyValue?.ToString()?.StartsWithSafe(valueToCompare?.ToString()) ?? false),
+			Operators.NotEndsWith => !(propertyValue?.ToString()?.EndsWithSafe(valueToCompare?.ToString()) ?? false),
+			Operators.NotContains => !(propertyValue?.ToString()?.ContainsSafe(valueToCompare?.ToString()) ?? false),
+			Operators.IsNull => propertyValue == null,
+			Operators.IsNotNull => propertyValue != null,
+			Operators.DefaultOrEmpty => ValidationHelper.IsDefaultOrEmpty(propertyValue, valueToCompare),
+			Operators.NotDefaultOrEmpty => !ValidationHelper.IsDefaultOrEmpty(propertyValue, valueToCompare),
+			_ => throw new NotSupportedException($"Not supported {nameof(Operator)} = {Operator}"),
+		};
 	}
 
 	public override string ToString()

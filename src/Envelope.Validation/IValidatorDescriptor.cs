@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Envelope.Validation;
 
+#if NET6_0_OR_GREATER
+[Envelope.Serializer.JsonPolymorphicConverter]
+#endif
 public interface IValidatorDescriptor
 {
 	Type ObjectType { get; }

@@ -177,10 +177,22 @@
   <data name="InclusiveExclusiveBetween_WithProperty" xml:space="preserve">
     <value>'{PropertyName}' must be greater than or equal to {From} and less than {To}.</value>
   </data>
-  <data name="Length" xml:space="preserve">
+  <data name="Length_Max" xml:space="preserve">
+    <value>Must be at the most {MaxLength} characters.</value>
+  </data>
+  <data name="Length_Max_WithProperty" xml:space="preserve">
+    <value>'{PropertyName}' must be at the most {MaxLength} characters.</value>
+  </data>
+  <data name="Length_Min" xml:space="preserve">
+    <value>Must be at least {MinLength} characters.</value>
+  </data>
+  <data name="Length_Min_WithProperty" xml:space="preserve">
+    <value>'{PropertyName}' must be at least {MinLength} characters.</value>
+  </data>
+  <data name="Length_Range" xml:space="preserve">
     <value>Must be between {MinLength} and {MaxLength} characters.</value>
   </data>
-  <data name="Length_WithProperty" xml:space="preserve">
+  <data name="Length_Range_WithProperty" xml:space="preserve">
     <value>'{PropertyName}' must be between {MinLength} and {MaxLength} characters.</value>
   </data>
   <data name="LessThan" xml:space="preserve">

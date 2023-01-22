@@ -25,15 +25,15 @@ public class PropertyValidator<T, TProperty> : Validator<T>, IPropertyValidator<
 		ValidatorType validatorType,
 		Func<T, TProperty> valueGetter,
 		IObjectPath objectPath,
-		Func<T?, bool>? condition,
+		Func<T?, bool>? serverCondition,
 		IClientConditionDefinition? clientConditionDefinition,
 		Func<T?, string?>? failureInfoFunc,
 		Func<T?, TProperty?, string, string?>? messageGetter,
 		Func<T?, TProperty?, string, string?>? messageWithPropertyGetter)
-		: base(validatorType, objectPath, condition != null, clientConditionDefinition)
+		: base(validatorType, objectPath, serverCondition != null, clientConditionDefinition)
 	{
 		ValueGetter = valueGetter ?? throw new ArgumentNullException(nameof(valueGetter));
-		Condition = condition;
+		Condition = serverCondition;
 		FailureInfoFunc = failureInfoFunc;
 
 		DefaultValidationMessage = "";

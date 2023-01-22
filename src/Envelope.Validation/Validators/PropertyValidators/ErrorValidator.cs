@@ -11,15 +11,15 @@ internal class ErrorValidator<T, TProperty> : PropertyValidator<T, TProperty?>
 	public ErrorValidator(
 		Func<T, TProperty> valueGetter,
 		IObjectPath objectPath,
-		Func<T?, bool> condition,
+		Func<T?, bool> serverCondition,
 		IClientConditionDefinition? clientConditionDefinition,
 		Func<T?, string?>? failureInfoFunc,
 		Func<T?, TProperty?, string, string?>? messageGetter,
 		Func<T?, TProperty?, string, string?>? messageWithPropertyGetter)
-		: base(ValidatorType.ErrorProperty, valueGetter, objectPath, condition, clientConditionDefinition, failureInfoFunc, messageGetter, messageWithPropertyGetter)
+		: base(ValidatorType.ErrorProperty, valueGetter, objectPath, serverCondition, clientConditionDefinition, failureInfoFunc, messageGetter, messageWithPropertyGetter)
 	{
-		if (condition == null)
-			throw new ArgumentNullException(nameof(condition));
+		if (serverCondition == null)
+			throw new ArgumentNullException(nameof(serverCondition));
 	}
 
 	protected override IDictionary<string, object?> GetPlaceholderValues()

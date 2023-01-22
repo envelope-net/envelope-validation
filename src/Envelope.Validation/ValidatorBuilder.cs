@@ -19,34 +19,34 @@ public interface IValidatorBuilder<TBuilder, T> : IValidatorDescriptorBuilder
 	public TBuilder ForProperty<TProperty>(
 		Expression<Func<T, TProperty>> expression,
 		Action<PropertyValidator<T, TProperty>> propertyValidatorBuilder,
-		Func<T?, bool>? condition = null,
+		Func<T?, bool>? serverCondition = null,
 		Func<ClientCondition<T>, IClientConditionDefinition>? clientCondition = null,
 		Func<T?, string>? failureInfoFunc = null);
 
 	public TBuilder ForNavigation<TNavigation>(
 		Expression<Func<T, TNavigation>> expression,
 		Action<ValidatorBuilder<TNavigation>> validatorBuilder,
-		Func<T?, bool>? condition = null,
+		Func<T?, bool>? serverCondition = null,
 		Func<T?, string>? failureInfoFunc = null);
 
 	public TBuilder ForEach<TItem>(
 		Expression<Func<T, IEnumerable<TItem>>> expression,
 		Action<ValidatorBuilder<TItem>> validatorBuilder,
-		Func<T?, bool>? condition = null,
+		Func<T?, bool>? serverCondition = null,
 		Func<T?, string>? detailInfoFunc = null);
 
-	public TBuilder WithError(Func<T?, bool> condition, Func<T?, string> errorMessage, Func<T?, string>? failureInfoFunc = null);
+	public TBuilder WithError(Func<T?, bool> serverCondition, Func<T?, string> errorMessage, Func<T?, string>? failureInfoFunc = null);
 
 	public TBuilder WithPropertyError<TProperty>(
 		Expression<Func<T, TProperty>> expression,
-		Func<T?, bool> condition,
+		Func<T?, bool> serverCondition,
 		Func<T?, TProperty?, string, string?>? messageGetter,
 		Func<T?, TProperty?, string, string?>? messageWithPropertyGetter = null,
 		Func<T?, string>? failureInfoFunc = null);
 
 	public TBuilder WithPropertyError<TProperty>(
 		Expression<Func<T, TProperty>> expression,
-		Func<T?, bool> condition,
+		Func<T?, bool> serverCondition,
 		Func<ClientCondition<T>, IClientConditionDefinition>? clientCondition,
 		Func<T?, TProperty?, string, string?>? messageGetter,
 		Func<T?, TProperty?, string, string?>? messageWithPropertyGetter = null,
@@ -79,7 +79,7 @@ public abstract class ValidatorBuilderBase<TBuilder, T> : IValidatorBuilder<TBui
 	public TBuilder ForProperty<TProperty>(
 		Expression<Func<T, TProperty>> expression,
 		Action<PropertyValidator<T, TProperty>> propertyValidatorBuilder,
-		Func<T?, bool>? condition = null,
+		Func<T?, bool>? serverCondition = null,
 		Func<ClientCondition<T>, IClientConditionDefinition>? clientCondition = null,
 		Func<T?, string>? failureInfoFunc = null)
 	{
@@ -94,7 +94,7 @@ public abstract class ValidatorBuilderBase<TBuilder, T> : IValidatorBuilder<TBui
 		var cc = new ClientCondition<T>();
 		var clientConditionDefinition = clientCondition?.Invoke(cc);
 
-		var propertyValidator = new PropertyValidator<T, TProperty>(ValidatorType.PropertyValidator, PropertyAccessor.GetCachedAccessor(expression), newObjectPath, condition, clientConditionDefinition, failureInfoFunc, null, null);
+		var propertyValidator = new PropertyValidator<T, TProperty>(ValidatorType.PropertyValidator, PropertyAccessor.GetCachedAccessor(expression), newObjectPath, serverCondition, clientConditionDefinition, failureInfoFunc, null, null);
 
 		((IValidator)_validator).AddValidatorInternal(propertyValidator);
 		propertyValidatorBuilder.Invoke(propertyValidator);
@@ -105,7 +105,7 @@ public abstract class ValidatorBuilderBase<TBuilder, T> : IValidatorBuilder<TBui
 	public TBuilder ForNavigation<TNavigation>(
 		Expression<Func<T, TNavigation>> expression,
 		Action<ValidatorBuilder<TNavigation>> validatorBuilder,
-		Func<T?, bool>? condition = null,
+		Func<T?, bool>? serverCondition = null,
 		Func<T?, string>? failureInfoFunc = null)
 	{
 		if (expression == null)
@@ -116,7 +116,7 @@ public abstract class ValidatorBuilderBase<TBuilder, T> : IValidatorBuilder<TBui
 
 		var newObjectPath = _validator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp).AddNavigation(expression);
 
-		var navigationValidator = new NavigationValidator<T, TNavigation>(PropertyAccessor.GetCachedAccessor(expression), newObjectPath, condition, failureInfoFunc);
+		var navigationValidator = new NavigationValidator<T, TNavigation>(PropertyAccessor.GetCachedAccessor(expression), newObjectPath, serverCondition, failureInfoFunc);
 
 		((IValidator)_validator).AddValidatorInternal(navigationValidator);
 		validatorBuilder.Invoke(navigationValidator!);
@@ -126,7 +126,7 @@ public abstract class ValidatorBuilderBase<TBuilder, T> : IValidatorBuilder<TBui
 	public TBuilder ForEach<TItem>(
 		Expression<Func<T, IEnumerable<TItem>>> expression,
 		Action<ValidatorBuilder<TItem>> validatorBuilder,
-		Func<T?, bool>? condition = null,
+		Func<T?, bool>? serverCondition = null,
 		Func<T?, string>? detailInfoFunc = null)
 	{
 		if (expression == null)
@@ -137,24 +137,24 @@ public abstract class ValidatorBuilderBase<TBuilder, T> : IValidatorBuilder<TBui
 
 		var newObjectPath = _validator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp).AddEnumerable(expression);
 
-		var enumerableValidator = new EnumerableValidator<T, TItem>(PropertyAccessor.GetCachedAccessor(expression), newObjectPath, condition, detailInfoFunc);
+		var enumerableValidator = new EnumerableValidator<T, TItem>(PropertyAccessor.GetCachedAccessor(expression), newObjectPath, serverCondition, detailInfoFunc);
 
 		((IValidator)_validator).AddValidatorInternal(enumerableValidator);
 		validatorBuilder.Invoke(enumerableValidator!);
 		return _builder;
 	}
 
-	public TBuilder WithError(Func<T?, bool> condition, Func<T?, string> errorMessage, Func<T?, string>? failureInfoFunc = null)
+	public TBuilder WithError(Func<T?, bool> serverCondition, Func<T?, string> errorMessage, Func<T?, string>? failureInfoFunc = null)
 	{
-		if (condition == null)
-			throw new ArgumentNullException(nameof(condition));
+		if (serverCondition == null)
+			throw new ArgumentNullException(nameof(serverCondition));
 
 		if (errorMessage == null)
 			throw new ArgumentNullException(nameof(errorMessage));
 
 		var newObjectPath = _validator.ObjectPath.Clone(ObjectPathCloneMode.BottomUp);
 
-		var validator = new ErrorValidator<T>(newObjectPath, condition, errorMessage, failureInfoFunc);
+		var validator = new ErrorValidator<T>(newObjectPath, serverCondition, errorMessage, failureInfoFunc);
 		((IValidator)_validator).AddValidatorInternal(validator);
 
 		return _builder;
@@ -162,15 +162,15 @@ public abstract class ValidatorBuilderBase<TBuilder, T> : IValidatorBuilder<TBui
 
 	public TBuilder WithPropertyError<TProperty>(
 		Expression<Func<T, TProperty>> expression,
-		Func<T?, bool> condition,
+		Func<T?, bool> serverCondition,
 		Func<T?, TProperty?, string, string?>? messageGetter,
 		Func<T?, TProperty?, string, string?>? messageWithPropertyGetter = null,
 		Func<T?, string>? failureInfoFunc = null)
-		=> WithPropertyError(expression, condition, null, messageGetter, messageWithPropertyGetter, failureInfoFunc);
+		=> WithPropertyError(expression, serverCondition, null, messageGetter, messageWithPropertyGetter, failureInfoFunc);
 
 	public TBuilder WithPropertyError<TProperty>(
 		Expression<Func<T, TProperty>> expression,
-		Func<T?, bool> condition,
+		Func<T?, bool> serverCondition,
 		Func<ClientCondition<T>, IClientConditionDefinition>? clientCondition,
 		Func<T?, TProperty?, string, string?>? messageGetter,
 		Func<T?, TProperty?, string, string?>? messageWithPropertyGetter = null,
@@ -179,8 +179,8 @@ public abstract class ValidatorBuilderBase<TBuilder, T> : IValidatorBuilder<TBui
 		if (expression == null)
 			throw new ArgumentNullException(nameof(expression));
 
-		if (condition == null)
-			throw new ArgumentNullException(nameof(condition));
+		if (serverCondition == null)
+			throw new ArgumentNullException(nameof(serverCondition));
 
 		if (messageGetter == null)
 			throw new ArgumentNullException(nameof(messageGetter));
@@ -194,7 +194,7 @@ public abstract class ValidatorBuilderBase<TBuilder, T> : IValidatorBuilder<TBui
 			new Validators.PropertyValidators.ErrorValidator<T, TProperty>(
 				PropertyAccessor.GetCachedAccessor(expression),
 				newObjectPath,
-				condition,
+				serverCondition,
 				clientConditionDefinition,
 				failureInfoFunc,
 				messageGetter,

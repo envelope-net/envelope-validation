@@ -15,7 +15,9 @@ public enum Operators
 	NotEndsWith,
 	NotContains,
 	IsNull,
-	IsNotNull
+	IsNotNull,
+	DefaultOrEmpty,
+	NotDefaultOrEmpty
 }
 
 public enum LogicalOperators
@@ -41,7 +43,9 @@ public static class OperatorConverter
 		{ Client.Operators.NotEndsWith, nameof(Client.Operators.NotEndsWith) },
 		{ Client.Operators.NotContains, nameof(Client.Operators.NotContains) },
 		{ Client.Operators.IsNull, nameof(Client.Operators.IsNull) },
-		{ Client.Operators.IsNotNull, nameof(Client.Operators.IsNotNull) }
+		{ Client.Operators.IsNotNull, nameof(Client.Operators.IsNotNull) },
+		{ Client.Operators.DefaultOrEmpty, nameof(Client.Operators.DefaultOrEmpty) },
+		{ Client.Operators.NotDefaultOrEmpty, nameof(Client.Operators.NotDefaultOrEmpty) },
 	});
 
 	private static readonly Lazy<Dictionary<LogicalOperators, string>> _logicalOperators = new(() => new()
