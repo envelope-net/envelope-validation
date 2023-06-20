@@ -10,6 +10,7 @@ internal class ValidationFailure : IValidationFailure
 	public ValidatorType Type { get; }
 	public ValidationSeverity Severity { get; set; } = ValidationSeverity.Error;
 	public string Message { get; internal set; }
+	public string? Code { get; internal set; }
 	public string MessageWithPropertyName { get; internal set; }
 	public string? DetailInfo { get; internal set; }
 	public bool HasServerCondition { get; }
